@@ -38,14 +38,9 @@ void SetupTMP36() {
 }
 
 
-float GetTemperatureTMP36(void) {
-  int rawData = analogRead(TEMPERATURE_TMP36_PIN);
-  float voltage = map(rawData, ADC_MIN, ADC_MAX, VOLT_MIN, VOLT_MAX);
-  float temperature = map(voltage, VOLT_MIN, VOLT_MAX, TEMP_MIN, TEMP_MAX);
-  
+float GetTemperatureTMP36(void) { 
   float celsius = map(((rawData - 20) * 3.04), ADC_MIN, ADC_MAX, TEMP_MIN, TEMP_MAX);
 
-  //return temperature;
   return celsius;
 }
 //==================================//
