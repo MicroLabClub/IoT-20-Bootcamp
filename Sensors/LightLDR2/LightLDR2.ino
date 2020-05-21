@@ -1,37 +1,35 @@
-const int ledPin = 13;
+#define LDR_PIN A0
+#define LIGHT_MIN 10
+#define LIGHT_MAX 100
+#define ADC_MIN 0
+#define ADC_MAX 1023
+#define VOLT_MIN 0
+#define VOLT_MAX 5
+  
 
-const int ldrPin = A0;
+void LightSensorSetup() {
+  pinMode(LDR_PIN, INPUT);
+}
+
+float GetLight() {
+  int rawData = analogRead(LDR_PIN);
+  float voltage = map(rawData, ADC_MIN, ADC_MAX, VOLT_MIN, VOLT_MAX);
+  float light = map(voltage, VOLT_MIN, VOLT_MAX, LIGHT_MIN, LIGHT_MAX);
+  
+  return light;
+}
 
 void setup() {
-
-Serial.begin(9600);
-
-pinMode(ledPin, OUTPUT);
-
-pinMode(ldrPin, INPUT);
-
+  Serial.begin(9600);
+  LightSensorSetup();
 }
 
 void loop() {
 
-int ldrStatus = analogRead(ldrPin);
-
-if (ldrStatus <= 200) {
-
-digitalWrite(ledPin, HIGH);
-
-Serial.print("Its DARK, Turn on the LED : ");
-
-Serial.println(ldrStatus);
-
-} else {
-
-digitalWrite(ledPin, LOW);
-
-Serial.print("Its BRIGHT, Turn off the LED : ");
-
-Serial.println(ldrStatus);
-
-}
+  Serial.print("Light value: ");
+  float light = GetLight();
+  Serial.print(light);
+  Serial.println();
+  delay(200);
 
 }
