@@ -38,9 +38,11 @@ void SetupTMP36() {
 }
 
 
-float GetTemperatureTMP36(void) { 
+float GetTemperatureTMP36(void) {
+  int rawData = analogRead(TEMPERATURE_TMP36_PIN);
   float celsius = map(((rawData - 20) * 3.04), ADC_MIN, ADC_MAX, TEMP_MIN, TEMP_MAX);
 
+  //return temperature;
   return celsius;
 }
 //==================================//
@@ -106,6 +108,6 @@ void loop() {
     Serial.print(" , ");
   }
   Serial.println();
-  delay(200);
+  delay(1000);
   
 }
